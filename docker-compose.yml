@@ -1,0 +1,73 @@
+version: "3.9"
+
+services:
+  web:
+    image: nginx:1.14-alpine
+    ports:
+      - 80:80
+      - 443:443
+    working_dir: /etc/nginx
+    volumes:
+      - ./backend:/backend
+      - .web/sites:/etc/nginx/conf.d
+    links:
+      - backend
+
+  backend:
+    build:
+      context: .backend/
+      dockerfile: Dockerfile
+    working_dir: /backend
+    user: docker
+    volumes:
+      - ./backend:/backend
+      - .backend/bash_history:/home/.bash_history
+    environment:
+      HISTFILE: /home/.bash_history
+    expose:
+      - 9000
+
+  redis:
+    image: redis:6.0
+    expose:
+      - 6379
+
+  database:
+    image: postgres:15-alpine
+    volumes:
+      - apiPlatform:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: app
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secret
+    expose:
+      - 5432
+
+  database_for_testing:
+    image: postgres:15-alpine
+    tmpfs: /var/lib/postgresql
+    environment:
+      POSTGRES_DB: app
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secret
+    expose:
+      - 5432
+
+  adminer:
+    image: adminer:4.8.1
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    ports:
+      - 8081:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@superStore.com
+      PGADMIN_DEFAULT_PASSWORD: secret
+
+volumes:
+  apiPlatform:
+
