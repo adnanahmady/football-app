@@ -7,6 +7,9 @@
         "php": ">=8.1",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "doctrine/doctrine-bundle": "^2.9",
+        "doctrine/doctrine-migrations-bundle": "^3.2",
+        "doctrine/orm": "^2.15",
         "symfony/console": "6.2.*",
         "symfony/dotenv": "6.2.*",
         "symfony/flex": "^2",
@@ -16,8 +19,12 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.16",
+        "phpunit/phpunit": "^9.5",
         "squizlabs/php_codesniffer": "^3.7",
-        "symfony/maker-bundle": "^1.48"
+        "symfony/browser-kit": "6.2.*",
+        "symfony/css-selector": "6.2.*",
+        "symfony/maker-bundle": "^1.48",
+        "symfony/phpunit-bridge": "^6.2"
     },
     "config": {
         "allow-plugins": {
@@ -50,6 +57,9 @@
         "fix": [
             "php-cs-fixer --config=.php-cs-fixer.dist.php --verbose --diff fix $(pwd)",
             "phpcs -s --standard=$(pwd)/phpcs.dist.xml"
+        ],
+        "test": [
+            "phpunit --stop-on-error --stop-on-defect"
         ],
         "auto-scripts": {
             "cache:clear": "symfony-cmd",

@@ -24,6 +24,11 @@ services:
       - .backend/bash_history:/home/.bash_history
     environment:
       HISTFILE: /home/.bash_history
+      DB_HOST: database
+      DB_NAME: app
+      DB_PORT: 5432
+      DB_USERNAME: admin
+      DB_PASSWORD: secret
     expose:
       - 9000
 
