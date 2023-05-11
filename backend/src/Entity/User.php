@@ -2,36 +2,27 @@
 
 namespace App\Entity;
 
-use App\EntityGroup\TeamGroup;
-use App\Repository\TeamRepository;
+use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
 
-#[ORM\Entity(repositoryClass: TeamRepository::class)]
-class Team
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\Table(name: '`user`')]
+class User
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups([TeamGroup::CREATE])]
     private ?int $id = null;
 
-    #[ORM\Column(length: 60)]
-    #[Groups([TeamGroup::CREATE])]
+    #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column]
-    #[Groups([TeamGroup::CREATE])]
-    private ?int $moneyBalance = null;
+    #[ORM\Column(length: 255)]
+    private ?string $surname = null;
 
-    #[ORM\ManyToOne(inversedBy: 'teams')]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Groups([TeamGroup::CREATE])]
-    private ?Country $country = null;
-
-    #[ORM\OneToMany(mappedBy: 'team', targetEntity: TeamPlayerContract::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'player', targetEntity: TeamPlayerContract::class, orphanRemoval: true)]
     private Collection $teamPlayerContracts;
 
     public function __construct()
@@ -56,33 +47,16 @@ class Team
         return $this;
     }
 
-    public function getMoneyBalance(): ?int
+    public function getSurname(): ?string
     {
-        return $this->moneyBalance;
+        return $this->surname;
     }
 
-    public function setMoneyBalance(int $moneyBalance): self
+    public function setSurname(string $surname): self
     {
-        $this->moneyBalance = $moneyBalance;
+        $this->surname = $surname;
 
         return $this;
-    }
-
-    public function getCountry(): ?Country
-    {
-        return $this->country;
-    }
-
-    public function setCountry(?Country $country): self
-    {
-        $this->country = $country;
-
-        return $this;
-    }
-
-    public function __toString(): string
-    {
-        return $this->getName();
     }
 
     /**
@@ -97,7 +71,7 @@ class Team
     {
         if (!$this->teamPlayerContracts->contains($teamPlayerContract)) {
             $this->teamPlayerContracts->add($teamPlayerContract);
-            $teamPlayerContract->setTeam($this);
+            $teamPlayerContract->setPlayer($this);
         }
 
         return $this;
@@ -107,11 +81,16 @@ class Team
     {
         if ($this->teamPlayerContracts->removeElement($teamPlayerContract)) {
             // set the owning side to null (unless already changed)
-            if ($teamPlayerContract->getTeam() === $this) {
-                $teamPlayerContract->setTeam(null);
+            if ($teamPlayerContract->getPlayer() === $this) {
+                $teamPlayerContract->setPlayer(null);
             }
         }
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getName() . ' ' . $this->getSurname();
     }
 }

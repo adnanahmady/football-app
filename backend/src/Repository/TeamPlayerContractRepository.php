@@ -2,27 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Team;
+use App\Entity\TeamPlayerContract;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Team>
+ * @extends ServiceEntityRepository<TeamPlayerContract>
  *
- * @method Team|null find($id, $lockMode = null, $lockVersion = null)
- * @method Team|null findOneBy(array $criteria, array $orderBy = null)
- * @method Team[]    findAll()
- * @method Team[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method TeamPlayerContract|null find($id, $lockMode = null, $lockVersion = null)
+ * @method TeamPlayerContract|null findOneBy(array $criteria, array $orderBy = null)
+ * @method TeamPlayerContract[]    findAll()
+ * @method TeamPlayerContract[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class TeamRepository extends ServiceEntityRepository
+class TeamPlayerContractRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Team::class);
+        parent::__construct($registry, TeamPlayerContract::class);
     }
 
-    public function save(Team $entity, bool $flush = false): void
+    public function save(TeamPlayerContract $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -31,7 +30,7 @@ class TeamRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Team $entity, bool $flush = false): void
+    public function remove(TeamPlayerContract $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,22 +39,8 @@ class TeamRepository extends ServiceEntityRepository
         }
     }
 
-    public function paginate(int $page, int $limit): Paginator
-    {
-        $teams = $this
-            ->createQueryBuilder('p')
-            ->orderBy('p.id', 'DESC')
-            ->getQuery();
-        $paginator = new Paginator($teams);
-        $paginator->getQuery()
-            ->setFirstResult($limit * ($page - 1))
-            ->setMaxResults($limit);
-
-        return $paginator;
-    }
-
 //    /**
-//     * @return Team[] Returns an array of Team objects
+//     * @return TeamPlayerContract[] Returns an array of TeamPlayerContract objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -69,7 +54,7 @@ class TeamRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Team
+//    public function findOneBySomeField($value): ?TeamPlayerContract
 //    {
 //        return $this->createQueryBuilder('t')
 //            ->andWhere('t.exampleField = :val')

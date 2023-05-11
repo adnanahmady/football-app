@@ -23,7 +23,7 @@ abstract class AbstractFactory implements FactoryInterface
         return (new Initiator($this->entityManager))->initiate($entity);
     }
 
-    abstract protected function initiate(): array;
+    abstract protected function initiate(array $fields): array;
 
     /**
      * Determine how many instances of
@@ -48,11 +48,12 @@ abstract class AbstractFactory implements FactoryInterface
     {
         return $this->counter->count(
             fn () => $this->createEntity(
-                $this->initiated(
-                    array_merge(
-                        $this->initiate(),
-                        $fields,
-                        $rest
+                $this->initiate(
+                    $this->initiated(
+                        array_merge(
+                            $fields,
+                            $rest
+                        )
                     )
                 )
             )

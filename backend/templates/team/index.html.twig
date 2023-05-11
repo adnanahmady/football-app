@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TeamController!{% endblock %}
+
+{% block body %}
+    {% for team in teams %}
+        <div class="row mt-5">
+            <div class="col col-sm-4">
+                <h2 class="mb-3">Team</h2>
+                <hr>
+                <strong>{{ team }}</strong>
+            </div>
+            <div class="col">
+                <h2 class="mb-3">players</h2>
+                <hr>
+                <div class="list-group">
+                    {% for contract in team.getTeamPlayerContracts() %}
+                        <li class="list-group-item list-group-item-light">{{ contract.getPlayer() }}</li>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <div class="row">
+        <div class="col d-flex">
+        {% if lastPage > 1 %}
+            <nav aria-label="Page navigation" class="mx-auto mt-4">
+                <ul class="pagination">
+                    <li class="page-item{{ currentPage == 1 ? ' disabled' }}">
+                        <a href="{{ path('teams_page', {
+                            page: currentPage-1 < 1 ? 1 : currentPage-1
+                        }) }}" class="page-link">«</a>
+                    </li>
+
+                    {# Render each page number #}
+                    {% for i in 1..lastPage %}
+                        <li class="page-item{{ currentPage == i ? ' active' }}">
+                            <a href="{{ path('teams_page', {page: i}) }}" class="page-link">{{ i }}</a>
+                        </li>
+                    {% endfor %}
+
+                    {# `»` arrow #}
+                    <li class="page-item{{ currentPage == lastPage ? ' disabled' }}">
+                        <a href="{{ path('teams_page', {
+                            page: currentPage+1 <= lastPage ? currentPage+1 : currentPage
+                        }) }}" class="page-link">»</a>
+                    </li>
+                </ul>
+            </nav>
+        {% endif %}
+        </div>
+    </div>
+{% endblock %}

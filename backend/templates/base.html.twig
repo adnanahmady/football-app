@@ -8,12 +8,18 @@
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
+        <link rel="stylesheet" href="{{ asset('static/bootstrap.min.css') }}">
 
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
     <body>
+    <div class="container">
         {% block body %}{% endblock %}
+    </div>
+        <script src="{{ asset('static/popper.min.js') }}"></script>
+        <script src="{{ asset('static/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ asset('static/bootstrap.min.js') }}"></script>
     </body>
 </html>
