@@ -3,12 +3,14 @@
 namespace App\Tests;
 
 use App\Service\Finder\TraitMethodFinder;
+use App\Tests\Traits\AssertionsTrait;
 use App\Tests\Traits\HasFactoryTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseTestCase;
 
 class WebTestCase extends BaseTestCase
 {
     use HasFactoryTrait;
+    use AssertionsTrait;
 
     private TraitMethodFinder $finder;
 

@@ -12,6 +12,10 @@ return (new PhpCsFixer\Config())
         '@PSR2' => true,
         '@PSR12' => true,
         'concat_space' => ['spacing' => 'one'],
+        'php_unit_method_casing' => ['case' => 'snake_case'],
+        'php_unit_test_annotation' => ['style' => 'annotation'],
+        'void_return' => true,
     ])
+    ->setRiskyAllowed(true)
     ->setFinder($finder)
 ;

@@ -7,7 +7,7 @@ use App\Tests\WebTestCase;
 class HomePageTest extends WebTestCase
 {
     /** @test */
-    public function applicationShowsThatIsUnderConstructions(): void
+    public function application_shows_that_is_under_constructions(): void
     {
         $crawler = static::createClient()->request('GET', '/');
 

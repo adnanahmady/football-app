@@ -19,7 +19,12 @@ trait MigrateDatabaseTrait
 
     protected function setUpDatabaseMigration(): void
     {
-        $this->getCommandExecutor()->execute(
+        $commandExecutor = $this->getCommandExecutor();
+        $commandExecutor->execute(
+            'doctrine:database:create',
+            ['--if-not-exists' => true]
+        );
+        $commandExecutor->execute(
             'doctrine:migrations:migrate',
         );
     }
@@ -27,7 +32,8 @@ trait MigrateDatabaseTrait
     protected function tearDownDatabaseMigration(): void
     {
         $this->getCommandExecutor()->execute(
-            'doctrine:migrations:rollup',
+            'doctrine:database:drop',
+            ['--force' => true]
         );
     }
 }

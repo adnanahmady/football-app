@@ -6,6 +6,14 @@ define default
 $(if $(1),$(1),$(2))
 endef
 
+build:
+	# o is an acronym for options,
+	# you can add more options to
+	# the build command using like
+	# make build o=--no-cache or
+	# make build o="--no-cache --remove-orphans"
+	@docker-compose build ${o}
+
 up:
 	@touch .backend/bash_history
 	@docker-compose up -d ${options}
