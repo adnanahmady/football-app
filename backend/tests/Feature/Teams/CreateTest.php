@@ -3,6 +3,7 @@
 namespace App\Tests\Feature\Teams;
 
 use App\Entity\Country;
+use App\Repository\TeamRepository;
 use App\Tests\Traits\MigrateDatabaseTrait;
 use App\Tests\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
@@ -15,6 +16,24 @@ class CreateTest extends WebTestCase
     use MigrateDatabaseTrait;
 
     private null|KernelBrowser $client = null;
+
+    /**
+     * @test
+     */
+    public function created_team_should_get_stored_in_database(): void
+    {
+        $this->request(
+            name: 'sample team',
+            money_balance: 1200,
+            country_id: $this->createCountry()->getId()
+        );
+
+        $teams = $this->getContainer()
+            ->get(TeamRepository::class)
+            ->findAll();
+
+        $this->assertCount(1, $teams);
+    }
 
     public function dataProviderForValidationTest(): array
     {

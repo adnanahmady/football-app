@@ -27,7 +27,7 @@ class TeamController extends AbstractController
         $team->setCountry($countryRepository->findOneById(
             $request->getCountryId()
         ));
-        $teamRepository->save($team);
+        $teamRepository->save($team, true);
 
         return $this->json(
             ['data' => $team],

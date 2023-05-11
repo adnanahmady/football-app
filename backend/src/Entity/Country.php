@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\EntityGroup\CountryGroup;
 use App\Repository\CountryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -15,11 +16,11 @@ class Country
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups([TeamGroup::CREATE])]
+    #[Groups([TeamGroup::CREATE, CountryGroup::CREATE])]
     private ?int $id = null;
 
     #[ORM\Column(length: 60)]
-    #[Groups([TeamGroup::CREATE])]
+    #[Groups([TeamGroup::CREATE, CountryGroup::CREATE])]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'country', targetEntity: Team::class)]
