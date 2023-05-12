@@ -33,4 +33,12 @@ class WebTestCase extends BaseTestCase
             fn ($method) => $this->$method(),
         );
     }
+
+    protected function route(string $name, array $params = []): string
+    {
+        return $this
+            ->getContainer()
+            ->get('router')
+            ->generate($name, $params, false);
+    }
 }

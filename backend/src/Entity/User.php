@@ -6,6 +6,7 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -17,9 +18,11 @@ class User
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $surname = null;
 
     #[ORM\OneToMany(mappedBy: 'player', targetEntity: TeamPlayerContract::class, orphanRemoval: true)]
@@ -28,6 +31,11 @@ class User
     public function __construct()
     {
         $this->teamPlayerContracts = new ArrayCollection();
+    }
+
+    public function getCurrentPlayingTeam(): false|Team
+    {
+        return $this->teamPlayerContracts->last();
     }
 
     public function getId(): ?int
@@ -40,7 +48,7 @@ class User
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(null|string $name): self
     {
         $this->name = $name;
 
@@ -52,7 +60,7 @@ class User
         return $this->surname;
     }
 
-    public function setSurname(string $surname): self
+    public function setSurname(null|string $surname): self
     {
         $this->surname = $surname;
 

@@ -2,11 +2,10 @@
 
 namespace App\Request;
 
-use App\Repository\CountryRepository;
+use App\Entity\Country;
+use App\Service\Constraints\EntityExists;
 use App\Service\RequestValidator\AbstractRequestValidator;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class CreateTeamRequest extends AbstractRequestValidator
 {
@@ -18,32 +17,10 @@ class CreateTeamRequest extends AbstractRequestValidator
     #[Assert\NotBlank]
     protected mixed $moneyBalance;
 
+    #[EntityExists(Country::class)]
     #[Assert\Type('integer')]
     #[Assert\NotBlank]
     protected mixed $countryId;
-
-    public function __construct(
-        ValidatorInterface $validator,
-        RequestStack $requestStack,
-        readonly private CountryRepository $countryRepository,
-    ) {
-        parent::__construct($validator, $requestStack);
-    }
-
-    /**
-     * If country does not exist in system
-     * then it should not get set as team
-     * country.
-     *
-     * @param mixed $countryId country id
-     */
-    public function setCountryId(mixed $countryId): void
-    {
-        if (!$this->countryRepository->findOneById($countryId)) {
-            return;
-        }
-        $this->countryId = $countryId;
-    }
 
     public function getName(): string
     {

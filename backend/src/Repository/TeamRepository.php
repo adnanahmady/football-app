@@ -54,6 +54,11 @@ class TeamRepository extends ServiceEntityRepository
         return $paginator;
     }
 
+    public function findOneById(int $id): null|Team
+    {
+        return $this->findOneBy(compact('id'));
+    }
+
 //    /**
 //     * @return Team[] Returns an array of Team objects
 //     */
