@@ -2,16 +2,22 @@
 
 This application is a personal project that is using symfony framework. 
 
-## Requirements
+# Index
+* [Requirements](#requirements)
+* [Platforms](#platforms)
+* [Run the application](#run-application)
+* [Diagrams](#diagrams)
+
+# Requirements
 
 You need `docker` and `docker-compose` in order to run this application.
 If you don't have `make` on your operating system for running the application,
 you need to read `Makefile` and do as `up` method says, otherwise you just need
 to follow [Running](#run-application) section.
 
-## Platform
+# Platforms
 
-### Linux
+## Linux
 
 The application is listening to `football.test` as the domain address, and if you want to access
 the application using this domain and you're a linux user, you need to run this code.
@@ -20,7 +26,7 @@ the application using this domain and you're a linux user, you need to run this 
 echo '0.0.0.0 football.test' | sudo tee -a /etc/hosts
 ```
 
-### Windows
+## Windows
 
 For windows 10 users its a similar process, you need to add bellow code to the end of `hosts` file
 in the `c:\Windows\System32\Drivers\etc\hosts` path.
@@ -32,7 +38,7 @@ for windows to work.
 0.0.0.0 football.test
 ```
 
-## Run Application
+# Run Application
 
 for running application you need to execute `up` method using `make` command
 like bellow:
@@ -40,3 +46,9 @@ like bellow:
 ```shell
 make up
 ```
+
+# Diagrams
+
+The database design for the project.
+
+![Database diagram](.assets/football.jpg)
