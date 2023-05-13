@@ -1,0 +1,12 @@
+<div class="row">
+    <div class="col">
+        {% if app.session.has('errors') %}
+            {% for error in app.session.remove('errors') %}
+                <div class="alert alert-danger">
+                    <strong>{{ error.property }}</strong>
+                    {{ error.message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>

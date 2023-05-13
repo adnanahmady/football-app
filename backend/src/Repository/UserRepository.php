@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\TeamPlayerContract;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -37,6 +39,19 @@ class UserRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function getFreePlayers(): Collection
+    {
+        $users = $this->getEntityManager()
+            ->getRepository(TeamPlayerContract::class)
+            ->getContractedPlayerIds();
+
+        return $this->createQueryBuilder('q')
+            ->andWhere('q.id not in (:list)')
+            ->setParameter('list', $users)
+            ->getQuery()
+            ->getResult();
     }
 
 //    /**

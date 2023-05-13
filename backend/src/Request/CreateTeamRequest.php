@@ -18,7 +18,7 @@ class CreateTeamRequest extends AbstractRequestValidator
     protected mixed $moneyBalance;
 
     #[EntityExists(Country::class)]
-    #[Assert\Type('integer')]
+    #[Assert\Type('numeric')]
     #[Assert\NotBlank]
     protected mixed $countryId;
 

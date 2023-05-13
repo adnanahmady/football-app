@@ -6,7 +6,7 @@ use App\Exception\ValidationException;
 use App\Service\ErrorHandler\Bag\ErrorMessageBag;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
-class ViolationHandler
+class JsonViolationHandler
 {
     public function __construct(
         protected ConstraintViolationListInterface $violationList,

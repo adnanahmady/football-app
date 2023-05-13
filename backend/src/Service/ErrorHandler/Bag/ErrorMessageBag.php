@@ -25,4 +25,14 @@ class ErrorMessageBag implements ErrorMessageBagInterface
             'errors' => $this->errors,
         ];
     }
+
+    public function getMessage(): string
+    {
+        return $this->message;
+    }
+
+    public function getErrors(): array
+    {
+        return $this->errors;
+    }
 }

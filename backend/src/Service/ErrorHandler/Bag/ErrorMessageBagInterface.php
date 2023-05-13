@@ -11,4 +11,8 @@ interface ErrorMessageBagInterface
     ): void;
 
     public function toArray(): array;
+
+    public function getMessage(): string;
+
+    public function getErrors(): array;
 }

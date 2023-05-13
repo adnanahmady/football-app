@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Forms{% endblock %}
+
+{% block body %}
+    {% include 'success.html.twig' %}
+    {% include 'errors.html.twig' %}
+    <div class="accordion" id="accordionForms">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Create Country
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionForms">
+                <div class="accordion-body">
+                    <div class="card card-body">
+                        <h2>Create Country</h2>
+                        {{ form(createCountryForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Create Team
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionForms">
+                <div class="accordion-body">
+                    <div class="card card-body">
+                        <h2>Create Team</h2>
+                        {{ form(createTeamForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Create Player
+                </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionForms">
+                <div class="accordion-body">
+                    <div class="card card-body">
+                        <h2>Create Player</h2>
+                        {{ form(createPlayerForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -17,11 +17,11 @@ class CreatePlayerRequest extends AbstractRequestValidator
 
     #[EntityExists(entity: Team::class)]
     #[Assert\NotBlank]
-    #[Assert\Type('int')]
+    #[Assert\Type('numeric')]
     protected mixed $teamId;
 
     #[Assert\NotBlank]
-    #[Assert\Type('int')]
+    #[Assert\Type('integer')]
     #[Assert\GreaterThan(100)]
     protected mixed $amount;
 
@@ -33,20 +33,45 @@ class CreatePlayerRequest extends AbstractRequestValidator
     #[Assert\GreaterThan('today')]
     protected null|\DateTimeImmutable $endAt;
 
-    public function setStartAt(null|string $startAt): void
+    public function setStartAt(null|string|array $startAt): void
     {
-        $this->startAt = $this->getAsImmutable($startAt);
+        $this->startAt = $this->getAsImmutable(
+            is_array($startAt) ?
+                $this->dateToString($startAt) :
+                $startAt
+        );
+    }
+
+    public function setEndAt(null|string|array $endAt): void
+    {
+        $this->endAt = $this->getAsImmutable(
+            is_array($endAt) ?
+                $this->dateToString($endAt) :
+                $endAt
+        );
+    }
+
+    private function dateToString(array $datetime): string
+    {
+        $datetime = array_map(
+            fn ($s) => strlen($s) < 2 ? "0$s" : $s,
+            array_merge(...array_values($datetime))
+        );
+
+        return sprintf(
+            '%s-%s-%s %s:%s:00',
+            $datetime['year'],
+            $datetime['month'],
+            $datetime['day'],
+            $datetime['hour'],
+            $datetime['minute'],
+        );
     }
 
     private function getAsImmutable(
         null|string $datetime
     ): null|\DateTimeImmutable {
         return $datetime ? new \DateTimeImmutable($datetime) : null;
-    }
-
-    public function setEndAt(null|string $endAt): void
-    {
-        $this->endAt = $this->getAsImmutable($endAt);
     }
 
     public function getName(): ?string

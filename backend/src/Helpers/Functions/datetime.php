@@ -8,3 +8,10 @@ if (!function_exists('format')) {
         return date($format, strtotime($humanlyDateTime));
     }
 }
+
+if (!function_exists('now')) {
+    function now(string $format = 'Y-m-d H:i:s'): string
+    {
+        return format('now', $format);
+    }
+}

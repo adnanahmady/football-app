@@ -3,9 +3,12 @@
 namespace App\Service\RequestValidator;
 
 use App\Exception\InvalidMethodNameException;
-use App\Service\ErrorHandler\ViolationHandler;
+use App\Service\ErrorHandler\FormViolationHandler;
+use App\Service\ErrorHandler\JsonViolationHandler;
+use Symfony\Component\HttpFoundation\HeaderBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -17,7 +20,7 @@ abstract class AbstractRequestValidator
 
     public function __construct(
         protected ValidatorInterface $validator,
-        protected RequestStack $requestStack
+        protected RequestStack $requestStack,
     ) {
         $this->populate();
         $this->throwIfItsNotValid();
@@ -61,9 +64,16 @@ abstract class AbstractRequestValidator
      */
     protected function throwIfItsNotValid(): void
     {
-        $validator = new ViolationHandler($this->validate());
+        if ($this->expectsJson()) {
+            $handler = new JsonViolationHandler($this->validate());
+            $handler->handle();
 
-        $validator->handle();
+            return;
+        }
+        $handler = new FormViolationHandler(
+            $this->validate()
+        );
+        $handler->handle();
     }
 
     /**
@@ -76,7 +86,23 @@ abstract class AbstractRequestValidator
 
     public function toArray(): array
     {
-        return $this->request()->toArray();
+        if ($this->expectsJson()) {
+            return $this->request()->toArray();
+        }
+        $data = [];
+
+        foreach ($this->request()->request->getIterator() as $item) {
+            foreach ($item as $key => $value) {
+                $data[$key] = $value;
+            }
+        }
+
+        return $data;
+    }
+
+    public function expectsJson(): bool
+    {
+        return 'json' === $this->request()->getContentTypeFormat();
     }
 
     public function get(string $key, mixed $default): mixed
@@ -92,6 +118,16 @@ abstract class AbstractRequestValidator
     protected function request(): null|Request
     {
         return $this->requestStack->getCurrentRequest();
+    }
+
+    public function headers(): HeaderBag
+    {
+        return $this->request()->headers;
+    }
+
+    public function getSession(): SessionInterface
+    {
+        return $this->request()->getSession();
     }
 
     public function __call(string $name, array $arguments): mixed

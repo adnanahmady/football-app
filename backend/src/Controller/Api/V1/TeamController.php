@@ -2,13 +2,14 @@
 
 namespace App\Controller\Api\V1;
 
+use App\Controller\AbstractController;
 use App\Entity\Team;
 use App\EntityGroup\TeamGroup;
 use App\Repository\CountryRepository;
 use App\Repository\TeamRepository;
 use App\Request\CreateTeamRequest;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -20,7 +21,7 @@ class TeamController extends AbstractController
         CreateTeamRequest $request,
         TeamRepository $teamRepository,
         CountryRepository $countryRepository,
-    ): JsonResponse {
+    ): JsonResponse|RedirectResponse {
         $team = new Team();
         $team->setName($request->getName());
         $team->setMoneyBalance($request->getMoneyBalance());
@@ -29,10 +30,10 @@ class TeamController extends AbstractController
         ));
         $teamRepository->save($team, true);
 
-        return $this->json(
+        return $request->expectsJson() ? $this->json(
             ['data' => $team],
             Response::HTTP_CREATED,
             context: [ObjectNormalizer::GROUPS => [TeamGroup::CREATE]]
-        );
+        ) : $this->redirectBack($request, 'Team created successfully!');
     }
 }

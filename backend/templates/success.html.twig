@@ -1,0 +1,12 @@
+<div class="row">
+    <div class="col">
+        {% if app.session.has('success') %}
+            {% for message in app.session.remove('success') %}
+                <div class="alert alert-success">
+                    <strong>Successful</strong>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>

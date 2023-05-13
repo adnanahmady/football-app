@@ -39,6 +39,20 @@ class TeamPlayerContractRepository extends ServiceEntityRepository
         }
     }
 
+    public function getContractedPlayerIds(): array
+    {
+        return array_map(
+            fn (TeamPlayerContract $i) => $i->getPlayer()->getId(),
+            $this
+            ->createQueryBuilder('q')
+            ->andWhere('q.endAt >= :now')
+            ->setParameter('now', format())
+            ->distinct()
+            ->getQuery()
+            ->getResult()
+        );
+    }
+
 //    /**
 //     * @return TeamPlayerContract[] Returns an array of TeamPlayerContract objects
 //     */

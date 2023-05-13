@@ -21,8 +21,11 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+            - '../src/Helpers/Functions/'
 
     App\EventListener\ValidationExceptionListener:
+        tags: [kernel.event_listener]
+    App\EventListener\FormValidationExceptionListener:
         tags: [kernel.event_listener]
 
     # add more service definitions when explicit configuration is needed
