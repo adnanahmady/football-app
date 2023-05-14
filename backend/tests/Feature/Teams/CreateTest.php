@@ -9,6 +9,7 @@ use App\Tests\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 class CreateTest extends WebTestCase
@@ -16,6 +17,31 @@ class CreateTest extends WebTestCase
     use MigrateDatabaseTrait;
 
     private null|KernelBrowser $client = null;
+
+    /**
+     * @test
+     */
+    public function when_form_request_is_sent_it_should_be_redirected_with_proper_session(): void
+    {
+        $this->client->request(
+            method: 'POST',
+            uri: '/api/v1/teams',
+            parameters: [
+                'name' => 'sample team',
+                'money_balance' => 1200,
+                'country_id' => $this->createCountry()->getId(),
+            ]
+        );
+        $session = $this->session()->get('success');
+
+        $this->assertCount(1, $session);
+        $this->assertResponseRedirects();
+    }
+
+    private function session(): SessionInterface
+    {
+        return $this->client->getRequest()->getSession();
+    }
 
     /**
      * @test
@@ -58,6 +84,11 @@ class CreateTest extends WebTestCase
                 'country_id' => 1,
             ]],
             'money balance should be integer' => [[
+                'name' => 'team',
+                'money_balance' => 1200.33,
+                'country_id' => 1,
+            ]],
+            'money balance should be numeric' => [[
                 'name' => 'team',
                 'money_balance' => 'adddd1200',
                 'country_id' => 1,

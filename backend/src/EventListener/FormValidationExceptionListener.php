@@ -18,7 +18,7 @@ class FormValidationExceptionListener
         $event->getRequest()->getSession()->set('errors', $exception->getArrayMessage());
         $event->getRequest()->setMethod('GET');
         $event->setResponse(new RedirectResponse(
-            $event->getRequest()->headers->get('referer'),
+            $event->getRequest()->headers->get('referer', '/'),
             $exception->getStatusCode(),
         ));
     }

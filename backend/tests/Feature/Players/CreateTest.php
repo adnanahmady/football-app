@@ -11,6 +11,7 @@ use App\Tests\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 class CreateTest extends WebTestCase
@@ -18,6 +19,34 @@ class CreateTest extends WebTestCase
     use MigrateDatabaseTrait;
 
     private null|KernelBrowser $client = null;
+
+    /**
+     * @test
+     */
+    public function when_form_request_is_sent_it_should_be_redirected_with_proper_session(): void
+    {
+        $this->client->request(
+            method: 'POST',
+            uri: $this->route('create_player_v1'),
+            parameters: [
+                'name' => 'john',
+                'surname' => 'due',
+                'amount' => random_int(100, 99999),
+                'team_id' => $this->createTeam()->getId(),
+                'start_at' => '-3 years',
+                'end_at' => '+3 months',
+            ]
+        );
+        $session = $this->session()->get('success');
+
+        $this->assertCount(1, $session);
+        $this->assertResponseRedirects();
+    }
+
+    private function session(): SessionInterface
+    {
+        return $this->client->getRequest()->getSession();
+    }
 
     public function dataProviderForValidationTest(): array
     {

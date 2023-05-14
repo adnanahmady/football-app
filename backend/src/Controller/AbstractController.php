@@ -14,6 +14,6 @@ class AbstractController extends BaseController
     ): RedirectResponse {
         $request->getSession()->set('success', ['message' => $message]);
 
-        return $this->redirect($request->headers()->get('referer'));
+        return $this->redirect($request->headers()->get('referer', '/'));
     }
 }

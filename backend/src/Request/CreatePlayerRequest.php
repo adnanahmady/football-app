@@ -21,7 +21,7 @@ class CreatePlayerRequest extends AbstractRequestValidator
     protected mixed $teamId;
 
     #[Assert\NotBlank]
-    #[Assert\Type('integer')]
+    #[Assert\Regex('/^\d+$/')]
     #[Assert\GreaterThan(100)]
     protected mixed $amount;
 

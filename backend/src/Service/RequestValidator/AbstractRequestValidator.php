@@ -91,10 +91,23 @@ abstract class AbstractRequestValidator
         }
         $data = [];
 
-        foreach ($this->request()->request->getIterator() as $item) {
-            foreach ($item as $key => $value) {
-                $data[$key] = $value;
-            }
+        foreach ($this->request()->request->getIterator() as $key => $item) {
+            $data = $this->setKey($data, $key, $item);
+        }
+
+        return $data;
+    }
+
+    private function setKey(array $data, string $key, mixed $value): array
+    {
+        if (is_string($value)) {
+            $data[$key] = $value;
+
+            return $data;
+        }
+
+        foreach ($value as $key => $part) {
+            $data[$key] = $part;
         }
 
         return $data;

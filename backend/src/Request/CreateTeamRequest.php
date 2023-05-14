@@ -13,7 +13,7 @@ class CreateTeamRequest extends AbstractRequestValidator
     #[Assert\NotBlank]
     protected mixed $name;
 
-    #[Assert\Type('integer')]
+    #[Assert\Regex('/^\d+$/')]
     #[Assert\NotBlank]
     protected mixed $moneyBalance;
 
