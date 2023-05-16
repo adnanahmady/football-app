@@ -5,17 +5,13 @@ namespace App\Tests\Feature\Countries;
 use App\Repository\CountryRepository;
 use App\Tests\Traits\MigrateDatabaseTrait;
 use App\Tests\WebTestCase;
-use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\HttpKernel\KernelInterface;
 
 class CreateTest extends WebTestCase
 {
     use MigrateDatabaseTrait;
-
-    private null|KernelBrowser $client = null;
 
     /**
      * @test
@@ -118,15 +114,6 @@ class CreateTest extends WebTestCase
         $this->request(name: 'sample team');
 
         $this->assertResponseStatusCodeSame(Response::HTTP_CREATED);
-    }
-
-    private function getBootedKernel(): KernelInterface
-    {
-        if (null === $this->client) {
-            $this->client = static::createClient();
-        }
-
-        return $this->client->getKernel();
     }
 
     private function response(string $path = ''): array

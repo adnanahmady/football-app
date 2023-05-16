@@ -6,16 +6,12 @@ use App\Entity\Team;
 use App\Entity\TeamPlayerContract;
 use App\Tests\Traits\MigrateDatabaseTrait;
 use App\Tests\WebTestCase;
-use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\KernelInterface;
 
 class ListTest extends WebTestCase
 {
     use MigrateDatabaseTrait;
-
-    private null|KernelBrowser $client = null;
 
     /**
      * @test
@@ -128,15 +124,6 @@ class ListTest extends WebTestCase
         $this->request();
 
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-    }
-
-    private function getBootedKernel(): KernelInterface
-    {
-        if (null === $this->client) {
-            $this->client = static::createClient();
-        }
-
-        return $this->client->getKernel();
     }
 
     private function request(int $page = 1): Crawler
