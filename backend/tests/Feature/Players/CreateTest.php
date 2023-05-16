@@ -23,24 +23,48 @@ class CreateTest extends WebTestCase
     /**
      * @test
      */
-    public function when_form_request_is_sent_it_should_be_redirected_with_proper_session(): void
+    public function violations_with_form_request_should_redirect_with_proper_session_data(): void
     {
-        $this->client->request(
-            method: 'POST',
-            uri: $this->route('create_player_v1'),
-            parameters: [
-                'name' => 'john',
-                'surname' => 'due',
-                'amount' => random_int(100, 99999),
-                'team_id' => $this->createTeam()->getId(),
-                'start_at' => '-3 years',
-                'end_at' => '+3 months',
-            ]
+        $this->formRequest(
+            name: 'john',
+            surname: 'due',
+            amount: random_int(100, 99999),
+            team_id: 111111,
+            start_at: '-3 years',
+            end_at: '+3 months',
         );
-        $session = $this->session()->get('success');
 
+        $session = $this->session()->get('errors');
         $this->assertCount(1, $session);
         $this->assertResponseRedirects();
+    }
+
+    /**
+     * @test
+     */
+    public function when_form_request_is_sent_it_should_be_redirected_with_proper_session(): void
+    {
+        $this->formRequest(
+            name: 'john',
+            surname: 'due',
+            amount: random_int(100, 99999),
+            team_id: $this->createTeam()->getId(),
+            start_at: '-3 years',
+            end_at: '+3 months',
+        );
+
+        $session = $this->session()->get('success');
+        $this->assertCount(1, $session);
+        $this->assertResponseRedirects();
+    }
+
+    private function formRequest(mixed ...$parameters): Crawler
+    {
+        return $this->client->request(
+            method: 'POST',
+            uri: $this->route('create_player_v1'),
+            parameters: $parameters
+        );
     }
 
     private function session(): SessionInterface

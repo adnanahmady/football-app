@@ -20,7 +20,7 @@ to follow [Running](#run-application) section.
 ## Linux
 
 The application is listening to `football.test` as the domain address, and if you want to access
-the application using this domain and you're a linux user, you need to run this code.
+the application using this domain, and you're a linux user, you need to run this code.
 
 ```shell
 echo '0.0.0.0 football.test' | sudo tee -a /etc/hosts
@@ -28,7 +28,7 @@ echo '0.0.0.0 football.test' | sudo tee -a /etc/hosts
 
 ## Windows
 
-For windows 10 users its a similar process, you need to add bellow code to the end of `hosts` file
+For Windows 10 users it's a similar process, you need to add bellow code to the end of `hosts` file
 in the `c:\Windows\System32\Drivers\etc\hosts` path.
 
 **Attention:** you need to change space between `0.0.0.0` and `football.test` to tab character

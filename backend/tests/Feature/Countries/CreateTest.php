@@ -20,17 +20,34 @@ class CreateTest extends WebTestCase
     /**
      * @test
      */
-    public function when_form_request_is_sent_it_should_be_redirected_with_proper_session(): void
+    public function violations_with_form_request_should_redirect_with_proper_session_data(): void
     {
-        $this->client->request(
-            method: 'POST',
-            uri: $this->route('create_country_v1'),
-            parameters: ['name' => 'german']
-        );
-        $session = $this->session()->get('success');
+        $this->formRequest(name: 'g');
 
+        $session = $this->session()->get('errors');
         $this->assertCount(1, $session);
         $this->assertResponseRedirects();
+    }
+
+    /**
+     * @test
+     */
+    public function when_form_request_is_sent_it_should_be_redirected_with_proper_session(): void
+    {
+        $this->formRequest(name: 'german');
+
+        $session = $this->session()->get('success');
+        $this->assertCount(1, $session);
+        $this->assertResponseRedirects();
+    }
+
+    public function formRequest(mixed ...$parameters): Crawler
+    {
+        return $this->client->request(
+            method: 'POST',
+            uri: $this->route('create_country_v1'),
+            parameters: $parameters
+        );
     }
 
     private function session(): SessionInterface
