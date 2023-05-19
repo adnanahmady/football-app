@@ -24,6 +24,7 @@ class CreateTest extends WebTestCase
         $this->formRequest(
             name: 'john',
             surname: 'due',
+            email: 'john.due@players.com',
             amount: random_int(100, 99999),
             team_id: 111111,
             start_at: '-3 years',
@@ -43,6 +44,7 @@ class CreateTest extends WebTestCase
         $this->formRequest(
             name: 'john',
             surname: 'due',
+            email: 'john.due@players.com',
             amount: random_int(100, 99999),
             team_id: $this->createTeam()->getId(),
             start_at: '-3 years',
@@ -225,6 +227,7 @@ class CreateTest extends WebTestCase
         $this->request(
             name: 'john',
             surname: 'due',
+            email: 'john.due@players.com',
             amount: random_int(100, 99999),
             team_id: $team->getId(),
             start_at: format('-3 years'),

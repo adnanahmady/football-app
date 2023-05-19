@@ -3,7 +3,7 @@
 namespace App\Factory;
 
 use App\Entity\Team;
-use App\Entity\User;
+use App\Entity\User as Player;
 use App\Service\Factory\AbstractFactory;
 
 class TeamPlayerContractFactory extends AbstractFactory
@@ -14,7 +14,7 @@ class TeamPlayerContractFactory extends AbstractFactory
             'team' => $fields['team'] ??
                 $this->factory(Team::class)->create(),
             'player' => $fields['player'] ??
-                $this->factory(User::class)->create(),
+                $this->factory(Player::class)->create(),
             'amount' => $this->faker->randomNumber(),
             'startAt' => new \DateTimeImmutable(
                 $this->dateTimeBetween('-10 years', '-3 months')

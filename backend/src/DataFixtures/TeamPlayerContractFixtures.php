@@ -5,7 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Country;
 use App\Entity\Team;
 use App\Entity\TeamPlayerContract;
-use App\Entity\User;
+use App\Entity\User as Player;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -115,9 +115,9 @@ class TeamPlayerContractFixtures extends Fixture implements DependentFixtureInte
     private function createPlayer(
         ObjectManager $manager,
         string $fullName
-    ): User {
+    ): Player {
         $name = explode(' ', $fullName);
-        $player = new User();
+        $player = new Player();
         $player->setName($name[0]);
         $player->setSurname($name[1]);
 

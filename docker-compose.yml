@@ -61,13 +61,13 @@ services:
 
   adminer:
     image: adminer:4.8.1
-    restart: unless-stopped
+    restart: on-failure
     ports:
       - 8080:8080
 
   pgadmin:
     image: dpage/pgadmin4
-    restart: unless-stopped
+    restart: on-failure
     ports:
       - 8081:80
     environment:

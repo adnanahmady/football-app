@@ -2,14 +2,14 @@
 
 namespace App\DTO\ContractPlayer;
 
-use App\Entity\User;
+use App\Entity\User as Player;
 
 class PlayerDTO
 {
     private int $id;
     private string $fullName;
 
-    public function __construct(User $player)
+    public function __construct(Player $player)
     {
         $this->setId($player->getId());
         $this->setFullName(sprintf(
