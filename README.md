@@ -5,6 +5,7 @@ This application is a personal project that is using symfony framework.
 # Index
 * [Requirements](#requirements)
 * [Platforms](#platforms)
+* [Prepare the application](#preparation)
 * [Run the application](#run-application)
 * [Test the system functionality](#test)
 * [Diagrams](#diagrams)
@@ -38,6 +39,17 @@ for windows to work.
 ```shell
 0.0.0.0 football.test
 ```
+
+# Preparation
+
+If you're running the application for the first time, you may need to run bellow preparation command.
+
+```shell
+make prepare
+```
+
+This command prepares necessary requirements for the application, such as installing required packages
+for composer and loading initial data to database.
 
 # Run Application
 

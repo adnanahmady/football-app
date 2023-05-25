@@ -44,6 +44,11 @@ status: ps
 shell:
 	$(call execute,${service},${run})
 
+prepare:
+	$(call execute,,composer install)
+	$(call execute,,symfony console doctrine:migrations:migrate)
+	$(call execute,,symfony console doctrine:fixtures:load)
+
 test:
 	$(call execute,${service},composer test)
 
