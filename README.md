@@ -6,6 +6,7 @@ This application is a personal project that is using symfony framework.
 * [Requirements](#requirements)
 * [Platforms](#platforms)
 * [Run the application](#run-application)
+* [Test the system functionality](#test)
 * [Diagrams](#diagrams)
 
 # Requirements
@@ -45,6 +46,14 @@ like bellow:
 
 ```shell
 make up
+```
+
+# Test
+
+you can run all system tests using `test` command like bellow.
+
+```shell
+make test
 ```
 
 # Diagrams

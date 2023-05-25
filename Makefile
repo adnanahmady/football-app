@@ -6,6 +6,18 @@ define default
 $(if $(1),$(1),$(2))
 endef
 
+# This function receives two parameters,
+# first one is target service and the
+# second is running command, if target
+# service is not specified then the
+# main service will be picked as the target
+# service, if the desired command to run is
+# not specified then the main shell will get
+# run as the command
+define execute
+@docker-compose exec $(call default,$(1),${mainService}) $(call default,$(2),${mainShell})
+endef
+
 build:
 	# o is an acronym for options,
 	# you can add more options to
@@ -30,7 +42,10 @@ ps:
 status: ps
 
 shell:
-	@docker-compose exec $(call default,${service},${mainService}) $(call default,${run},${mainShell})
+	$(call execute,${service},${run})
+
+test:
+	$(call execute,${service},composer test)
 
 logs:
 	@docker-compose logs ${service}
