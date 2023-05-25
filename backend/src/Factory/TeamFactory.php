@@ -3,7 +3,7 @@
 namespace App\Factory;
 
 use App\Entity\Country;
-use App\Service\Factory\AbstractFactory;
+use App\Support\Factory\AbstractFactory;
 
 class TeamFactory extends AbstractFactory
 {

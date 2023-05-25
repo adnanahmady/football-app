@@ -3,8 +3,8 @@
 namespace App\Request;
 
 use App\Entity\Country;
-use App\Service\Constraints\EntityExists;
-use App\Service\RequestValidator\AbstractRequestValidator;
+use App\Constraints\EntityExists;
+use App\Support\RequestValidator\AbstractRequestValidator;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class CreateTeamRequest extends AbstractRequestValidator

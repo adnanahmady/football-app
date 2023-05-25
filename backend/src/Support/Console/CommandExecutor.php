@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Console;
+namespace App\Support\Console;
 
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Command\Command;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Factory;
+namespace App\Support\Factory;
 
 final class Counter implements CounterInterface
 {

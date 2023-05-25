@@ -2,7 +2,7 @@
 
 namespace App\Tests;
 
-use App\Service\Finder\TraitMethodFinder;
+use App\Support\Finder\TraitMethodFinder;
 use App\Tests\Traits\AssertionsTrait;
 use App\Tests\Traits\HasFactoryTrait;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Console;
+namespace App\Support\Console;
 
 use Symfony\Component\HttpKernel\KernelInterface;
 

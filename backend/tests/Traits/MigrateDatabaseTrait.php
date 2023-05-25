@@ -2,8 +2,8 @@
 
 namespace App\Tests\Traits;
 
-use App\Service\Console\CommandExecutor;
-use App\Service\Console\CommandExecutorInterface;
+use App\Support\Console\CommandExecutor;
+use App\Support\Console\CommandExecutorInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 trait MigrateDatabaseTrait

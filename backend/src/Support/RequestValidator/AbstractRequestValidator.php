@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Service\RequestValidator;
+namespace App\Support\RequestValidator;
 
 use App\Exception\InvalidMethodNameException;
-use App\Service\ErrorHandler\FormViolationHandler;
-use App\Service\ErrorHandler\JsonViolationHandler;
+use App\Support\ErrorHandler\FormViolationHandler;
+use App\Support\ErrorHandler\JsonViolationHandler;
 use Symfony\Component\HttpFoundation\HeaderBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;

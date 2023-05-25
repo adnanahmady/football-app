@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Service\ErrorHandler;
+namespace App\Support\ErrorHandler;
 
-use App\Exception\FormValidationException;
-use App\Service\ErrorHandler\Bag\ErrorMessageBag;
+use App\Exception\ValidationException;
+use App\Support\ErrorHandler\Bag\ErrorMessageBag;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
-class FormViolationHandler
+class JsonViolationHandler
 {
     public function __construct(
         protected ConstraintViolationListInterface $violationList,
@@ -23,7 +23,7 @@ class FormViolationHandler
 
     private function sendResponse(): void
     {
-        throw new FormValidationException($this->getErrorBag());
+        throw new ValidationException($this->getErrorBag());
     }
 
     private function getErrorBag(): ErrorMessageBag

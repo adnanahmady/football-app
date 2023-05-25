@@ -4,7 +4,7 @@ namespace App\Factory;
 
 use App\Entity\Team;
 use App\Entity\User as Player;
-use App\Service\Factory\AbstractFactory;
+use App\Support\Factory\AbstractFactory;
 
 class TeamPlayerContractFactory extends AbstractFactory
 {

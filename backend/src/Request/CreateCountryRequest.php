@@ -2,7 +2,7 @@
 
 namespace App\Request;
 
-use App\Service\RequestValidator\AbstractRequestValidator;
+use App\Support\RequestValidator\AbstractRequestValidator;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class CreateCountryRequest extends AbstractRequestValidator

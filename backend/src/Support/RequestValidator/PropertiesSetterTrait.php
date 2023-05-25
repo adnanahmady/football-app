@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\RequestValidator;
+namespace App\Support\RequestValidator;
 
 trait PropertiesSetterTrait
 {

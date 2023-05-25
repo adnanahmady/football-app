@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\DataTypes;
+namespace App\DataTypes;
 
 interface TypeInterface
 {

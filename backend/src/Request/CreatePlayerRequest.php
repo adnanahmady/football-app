@@ -2,9 +2,11 @@
 
 namespace App\Request;
 
+use App\Constraints\UniqueEntity;
 use App\Entity\Team;
-use App\Service\Constraints\EntityExists;
-use App\Service\RequestValidator\AbstractRequestValidator;
+use App\Entity\User;
+use App\Constraints\EntityExists;
+use App\Support\RequestValidator\AbstractRequestValidator;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class CreatePlayerRequest extends AbstractRequestValidator
@@ -16,7 +18,8 @@ class CreatePlayerRequest extends AbstractRequestValidator
     protected null|string $surname;
 
     #[Assert\Email]
-    #[Assert\NotBlank]
+    #[Assert\NotNull]
+    #[UniqueEntity(entity: User::class)]
     protected null|string $email;
 
     #[EntityExists(entity: Team::class)]

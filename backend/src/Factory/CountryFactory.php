@@ -2,7 +2,7 @@
 
 namespace App\Factory;
 
-use App\Service\Factory\AbstractFactory;
+use App\Support\Factory\AbstractFactory;
 
 class CountryFactory extends AbstractFactory
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\ErrorHandler\Bag;
+namespace App\Support\ErrorHandler\Bag;
 
 interface ErrorMessageBagInterface
 {

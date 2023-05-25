@@ -2,7 +2,7 @@
 
 namespace App\Exception;
 
-use App\Service\ErrorHandler\Bag\ErrorMessageBagInterface;
+use App\Support\ErrorHandler\Bag\ErrorMessageBagInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 

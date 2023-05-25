@@ -2,8 +2,8 @@
 
 namespace App\Tests\Traits;
 
-use App\Service\Factory\FactoryInterface;
-use App\Service\Factory\Initiator;
+use App\Support\Factory\FactoryInterface;
+use App\Support\Factory\Initiator;
 use Doctrine\ORM\EntityManagerInterface;
 
 trait HasFactoryTrait

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Service\Constraints;
+namespace App\Constraints;
 
-use App\Service\DataTypes\IntegerType;
-use App\Service\DataTypes\TypeInterface;
+use App\DataTypes\IntegerType;
+use App\DataTypes\TypeInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Validator\Constraint;
@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Exception\UnexpectedValueException;
 class EntityExistsValidator extends ConstraintValidator
 {
     public function __construct(
-        private EntityManagerInterface $entityManager
+        private readonly EntityManagerInterface $entityManager
     ) {
     }
 

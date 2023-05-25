@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Service\RequestValidator\AbstractRequestValidator;
+use App\Support\RequestValidator\AbstractRequestValidator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as BaseController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 

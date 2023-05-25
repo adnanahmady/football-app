@@ -20,6 +20,29 @@ class CreateTest extends WebTestCase
     /**
      * @test
      */
+    public function player_should_have_a_unique_email(): void
+    {
+        $data = [
+            'name' => 'john',
+            'surname' => 'due',
+            'email' => 'john@example.com',
+            'amount' => random_int(100, 99999),
+            'team_id' => $this->createTeam()->getId(),
+            'start_at' => format('-3 years'),
+            'end_at' => format('+3 months'),
+        ];
+        $this->request(...$data);
+        $this->request(...$data);
+
+        $this->assertResponseStatusCodeSame(
+            Response::HTTP_UNPROCESSABLE_ENTITY
+        );
+        $this->assertCount(1, $this->response('errors'));
+    }
+
+    /**
+     * @test
+     */
     public function violations_with_form_request_should_redirect_with_proper_session_data(): void
     {
         $this->formRequest(
