@@ -120,6 +120,7 @@ class TeamPlayerContractFixtures extends Fixture implements DependentFixtureInte
         $player = new Player();
         $player->setName($name[0]);
         $player->setSurname($name[1]);
+        $player->setEmail(sprintf('%s.%s@example.com', $name[0], $name[1]));
 
         $manager->persist($player);
         $manager->flush();

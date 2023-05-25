@@ -27,6 +27,7 @@ class PlayerController extends AbstractController
         $player = new User();
         $player->setName($request->getName());
         $player->setSurname($request->getSurname());
+        $player->setEmail($request->getEmail());
         $playerRepository->save($player, true);
         $team = $teamRepository->find($request->getTeamId());
         $contract = new TeamPlayerContract();

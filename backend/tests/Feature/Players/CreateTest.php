@@ -76,9 +76,45 @@ class CreateTest extends WebTestCase
     public function dataProviderForValidationTest(): array
     {
         return [
+            'email needs to be in proper format #2' => [[
+                'name' => 'john',
+                'surname' => 'due',
+                'email' => 'john.com',
+                'amount' => random_int(100, 99999),
+                'team_id' => 1,
+                'start_at' => '-3 years',
+                'end_at' => '+3 months',
+            ]],
+            'email needs to be in proper format #1' => [[
+                'name' => 'john',
+                'surname' => 'due',
+                'email' => 'john',
+                'amount' => random_int(100, 99999),
+                'team_id' => 1,
+                'start_at' => '-3 years',
+                'end_at' => '+3 months',
+            ]],
+            'email can not be blank string' => [[
+                'name' => 'john',
+                'surname' => 'due',
+                'email' => '',
+                'amount' => random_int(100, 99999),
+                'team_id' => 1,
+                'start_at' => '-3 years',
+                'end_at' => '+3 months',
+            ]],
+            'email can not be null' => [[
+                'name' => 'john',
+                'surname' => 'due',
+                'amount' => random_int(100, 99999),
+                'team_id' => 1,
+                'start_at' => '-3 years',
+                'end_at' => '+3 months',
+            ]],
             'end_at is required' => [[
                 'name' => 'john',
                 'surname' => 'due',
+                'email' => 'user@example.com',
                 'amount' => random_int(100, 99999),
                 'team_id' => 1,
                 'start_at' => '-3 years',
@@ -86,6 +122,7 @@ class CreateTest extends WebTestCase
             'start_at is required' => [[
                 'name' => 'john',
                 'surname' => 'due',
+                'email' => 'user@example.com',
                 'amount' => random_int(100, 99999),
                 'team_id' => 1,
                 'end_at' => '+3 months',
@@ -93,6 +130,7 @@ class CreateTest extends WebTestCase
             'team needs to be integer' => [[
                 'name' => 'john',
                 'surname' => 'due',
+                'email' => 'user@example.com',
                 'amount' => random_int(100, 99999),
                 'team_id' => 'bss40',
                 'start_at' => '-3 years',
@@ -101,6 +139,7 @@ class CreateTest extends WebTestCase
             'team needs to exists in system already' => [[
                 'name' => 'john',
                 'surname' => 'due',
+                'email' => 'user@example.com',
                 'amount' => random_int(100, 99999),
                 'team_id' => -11,
                 'start_at' => '-3 years',
@@ -109,6 +148,7 @@ class CreateTest extends WebTestCase
             'team is required' => [[
                 'name' => 'john',
                 'surname' => 'due',
+                'email' => 'user@example.com',
                 'amount' => random_int(100, 99999),
                 'start_at' => '-3 years',
                 'end_at' => '+3 months',
@@ -116,6 +156,7 @@ class CreateTest extends WebTestCase
             'amount of the contract should be integer' => [[
                 'name' => 'john',
                 'surname' => 'due',
+                'email' => 'user@example.com',
                 'amount' => 200.33,
                 'team_id' => 1,
                 'start_at' => '-3 years',
@@ -124,6 +165,7 @@ class CreateTest extends WebTestCase
             'amount of the contract should be more than 100 cents' => [[
                 'name' => 'john',
                 'surname' => 'due',
+                'email' => 'user@example.com',
                 'amount' => 100,
                 'team_id' => 1,
                 'start_at' => '-3 years',
@@ -132,12 +174,14 @@ class CreateTest extends WebTestCase
             'amount of the contract is required' => [[
                 'name' => 'john',
                 'surname' => 'due',
+                'email' => 'user@example.com',
                 'team_id' => 1,
                 'start_at' => '-3 years',
                 'end_at' => '+3 months',
             ]],
             'surname of the player is required' => [[
                 'name' => 'john',
+                'email' => 'user@example.com',
                 'amount' => random_int(100, 99999),
                 'team_id' => 1,
                 'start_at' => '-3 years',
@@ -146,6 +190,7 @@ class CreateTest extends WebTestCase
             'name of the player is required' => [[
                 'name' => null,
                 'surname' => 'due',
+                'email' => 'user@example.com',
                 'amount' => random_int(100, 99999),
                 'team_id' => 1,
                 'start_at' => '-3 years',

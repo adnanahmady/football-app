@@ -15,6 +15,10 @@ class CreatePlayerRequest extends AbstractRequestValidator
     #[Assert\NotBlank]
     protected null|string $surname;
 
+    #[Assert\Email]
+    #[Assert\NotBlank]
+    protected null|string $email;
+
     #[EntityExists(entity: Team::class)]
     #[Assert\NotBlank]
     #[Assert\Type('numeric')]
@@ -82,6 +86,11 @@ class CreatePlayerRequest extends AbstractRequestValidator
     public function getSurname(): ?string
     {
         return $this->surname;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
     }
 
     public function getTeamId(): ?int
