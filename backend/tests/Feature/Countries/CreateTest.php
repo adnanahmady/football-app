@@ -2,6 +2,7 @@
 
 namespace App\Tests\Feature\Countries;
 
+use App\Entity\User;
 use App\Repository\CountryRepository;
 use App\Tests\Traits\MigrateDatabaseTrait;
 use App\Tests\WebTestCase;
@@ -39,6 +40,8 @@ class CreateTest extends WebTestCase
 
     public function formRequest(mixed ...$parameters): Crawler
     {
+        $this->client->loginUser($this->createAdmin());
+
         return $this->client->request(
             method: 'POST',
             uri: $this->route('create_country_v1'),
@@ -136,10 +139,19 @@ class CreateTest extends WebTestCase
 
     private function request(mixed ...$parameters): Crawler
     {
+        $this->client->loginUser($this->createAdmin());
+
         return $this->client->jsonRequest(
             method: 'POST',
             uri: '/api/v1/countries',
             parameters: $parameters
         );
+    }
+
+    private function createAdmin(): User
+    {
+        return $this->factory(User::class)->create([
+            'roles' => ['ROLE_ADMIN'],
+        ]);
     }
 }

@@ -25,7 +25,7 @@ class TeamController extends AbstractController
         $team = new Team();
         $team->setName($request->getName());
         $team->setMoneyBalance($request->getMoneyBalance());
-        $team->setCountry($countryRepository->findOneById(
+        $team->setCountry($countryRepository->find(
             $request->getCountryId()
         ));
         $teamRepository->save($team, true);

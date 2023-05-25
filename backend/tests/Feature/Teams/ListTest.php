@@ -4,6 +4,7 @@ namespace App\Tests\Feature\Teams;
 
 use App\Entity\Team;
 use App\Entity\TeamPlayerContract;
+use App\Entity\User;
 use App\Tests\Traits\MigrateDatabaseTrait;
 use App\Tests\WebTestCase;
 use Symfony\Component\DomCrawler\Crawler;
@@ -128,6 +129,8 @@ class ListTest extends WebTestCase
 
     private function request(int $page = 1): Crawler
     {
+        $this->client->loginUser($this->factory(User::class)->create());
+
         return $this->client->request(
             method: 'GET',
             uri: '/teams',

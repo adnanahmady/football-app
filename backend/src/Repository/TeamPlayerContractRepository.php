@@ -46,7 +46,7 @@ class TeamPlayerContractRepository extends ServiceEntityRepository
             $this
             ->createQueryBuilder('q')
             ->andWhere('q.endAt >= :now')
-            ->setParameter('now', format())
+            ->setParameter('now', now())
             ->distinct()
             ->getQuery()
             ->getResult()

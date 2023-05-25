@@ -14,9 +14,9 @@ class UserFactory extends AbstractFactory
             'email' => $this->faker->email(),
             'password' => join('', [
                 '$2y$13$jRxcnHaSNaHpTwGgJZazoeU',
-                'MVmzdx7H7msR6Or9RarNmvRQVEJkUm'
+                'MVmzdx7H7msR6Or9RarNmvRQVEJkUm',
             ]), // password
-            'roles' => []
+            'roles' => $fields['roles'] ?? [],
         ];
     }
 }

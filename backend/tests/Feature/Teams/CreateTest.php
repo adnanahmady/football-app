@@ -3,6 +3,7 @@
 namespace App\Tests\Feature\Teams;
 
 use App\Entity\Country;
+use App\Entity\User;
 use App\Repository\TeamRepository;
 use App\Tests\Traits\MigrateDatabaseTrait;
 use App\Tests\WebTestCase;
@@ -48,6 +49,8 @@ class CreateTest extends WebTestCase
 
     private function formRequest(mixed ...$parameters): Crawler
     {
+        $this->client->loginUser($this->createAdmin());
+
         return $this->client->request(
             method: 'POST',
             uri: '/api/v1/teams',
@@ -209,6 +212,8 @@ class CreateTest extends WebTestCase
 
     private function request(mixed ...$parameters): Crawler
     {
+        $this->client->loginUser($this->createAdmin());
+
         return $this->client->jsonRequest(
             method: 'POST',
             uri: '/api/v1/teams',
@@ -219,5 +224,12 @@ class CreateTest extends WebTestCase
     private function createCountry(): array|object
     {
         return $this->factory(Country::class)->create();
+    }
+
+    private function createAdmin(): array|object
+    {
+        return $this->factory(User::class)->create([
+            'roles' => ['ROLE_ADMIN'],
+        ]);
     }
 }

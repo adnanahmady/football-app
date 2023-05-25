@@ -3,6 +3,7 @@
 namespace App\Tests\Feature\Players;
 
 use App\Entity\Team;
+use App\Entity\User;
 use App\Repository\TeamPlayerContractRepository;
 use App\Repository\TeamRepository;
 use App\Repository\UserRepository;
@@ -58,6 +59,8 @@ class CreateTest extends WebTestCase
 
     private function formRequest(mixed ...$parameters): Crawler
     {
+        $this->client->loginUser($this->createAdmin());
+
         return $this->client->request(
             method: 'POST',
             uri: $this->route('create_player_v1'),
@@ -250,7 +253,7 @@ class CreateTest extends WebTestCase
 
         $players = $this->getContainer()
             ->get(UserRepository::class)
-            ->findAll();
+            ->findAllPlayers();
         $teams = $this->getContainer()
             ->get(TeamRepository::class)
             ->findAll();
@@ -293,10 +296,18 @@ class CreateTest extends WebTestCase
 
     private function request(mixed ...$parameters): Crawler
     {
+        $this->client->loginUser($this->createAdmin());
+
         return $this->client->jsonRequest(
             method: 'POST',
             uri: $this->route('create_player_v1'),
             parameters: $parameters
         );
+    }
+
+    private function createAdmin(): User
+    {
+        return $this->factory(User::class)
+            ->create(['roles' => ['ROLE_ADMIN']]);
     }
 }

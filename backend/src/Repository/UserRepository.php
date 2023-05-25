@@ -5,7 +5,6 @@ namespace App\Repository;
 use App\Entity\TeamPlayerContract;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -58,7 +57,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->save($user, true);
     }
 
-    public function getFreePlayers(): Collection
+    public function getFreePlayers(): array
     {
         $users = $this->getEntityManager()
             ->getRepository(TeamPlayerContract::class)
@@ -66,6 +65,19 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         return $this->createQueryBuilder('q')
             ->andWhere('q.id not in (:list)')
+            ->setParameter('list', $users)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllPlayers(): array
+    {
+        $users = $this->getEntityManager()
+            ->getRepository(TeamPlayerContract::class)
+            ->getContractedPlayerIds();
+
+        return $this->createQueryBuilder('q')
+            ->andWhere('q.id in (:list)')
             ->setParameter('list', $users)
             ->getQuery()
             ->getResult();

@@ -39,11 +39,6 @@ class CountryRepository extends ServiceEntityRepository
         }
     }
 
-    public function findOneById(int $id): null|Country
-    {
-        return $this->findOneBy(['id' => $id]);
-    }
-
 //    /**
 //     * @return Country[] Returns an array of Country objects
 //     */
