@@ -35,9 +35,9 @@ trait PropertiesSetterTrait
 
     private function prepareProperty(string $property): string
     {
-        $preparedproperty = preg_split('/[-_]/', $property);
+        $preparedProperty = preg_split('/[-_]/', $property);
         $items = [];
-        foreach ($preparedproperty as $i => $item) {
+        foreach ($preparedProperty as $i => $item) {
             $items[] = $i < 1 ? $item : ucfirst($item);
         }
 

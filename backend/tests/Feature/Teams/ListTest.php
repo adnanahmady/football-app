@@ -63,11 +63,12 @@ class ListTest extends WebTestCase
 
         foreach ($teams as $team) {
             foreach ($team->getTeamPlayerContracts() as $contract) {
+                $playerFullName = $contract->getPlayer()->getFullName();
                 $this->assertStringContainsString(
                     sprintf(
                         '%s %s',
-                        $contract->getPlayer()->getName(),
-                        $contract->getPlayer()->getSurname(),
+                        $playerFullName->getName(),
+                        $playerFullName->getSurname(),
                     ),
                     $crawler->text()
                 );

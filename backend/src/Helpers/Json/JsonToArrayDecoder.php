@@ -8,7 +8,7 @@ class JsonToArrayDecoder
     {
     }
 
-    public function decode(): array|false
+    public function decode(): array|false|null
     {
         return json_decode($this->jsonString, associative: true);
     }

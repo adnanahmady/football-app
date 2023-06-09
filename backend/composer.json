@@ -23,6 +23,7 @@
         "symfony/flex": "^2",
         "symfony/form": "6.2.*",
         "symfony/framework-bundle": "6.2.*",
+        "symfony/mailer": "6.2.*",
         "symfony/property-access": "6.2.*",
         "symfony/property-info": "6.2.*",
         "symfony/runtime": "6.2.*",
@@ -30,7 +31,8 @@
         "symfony/serializer": "6.2.*",
         "symfony/twig-bundle": "6.2.*",
         "symfony/validator": "6.2.*",
-        "symfony/yaml": "6.2.*"
+        "symfony/yaml": "6.2.*",
+        "symfonycasts/verify-email-bundle": "^1.13"
     },
     "require-dev": {
         "fakerphp/faker": "^1.21",
@@ -55,6 +57,7 @@
     },
     "autoload": {
         "files": [
+            "src/Helpers/Functions/json.php",
             "src/Helpers/Functions/datetime.php"
         ],
         "psr-4": {
@@ -81,7 +84,7 @@
             "phpcs -s --standard=$(pwd)/phpcs.dist.xml"
         ],
         "test": [
-            "phpunit --stop-on-error --stop-on-defect"
+            "XDEBUG_MODE=trace phpunit --stop-on-error --stop-on-defect --colors=auto"
         ],
         "auto-scripts": {
             "cache:clear": "symfony-cmd",

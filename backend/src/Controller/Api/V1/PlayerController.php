@@ -10,6 +10,7 @@ use App\Repository\TeamPlayerContractRepository;
 use App\Repository\TeamRepository;
 use App\Repository\UserRepository;
 use App\Request\CreatePlayerRequest;
+use App\ValueObject\User\FullNameValue;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,8 +26,11 @@ class PlayerController extends AbstractController
         TeamPlayerContractRepository $contractRepository,
     ): JsonResponse|RedirectResponse {
         $player = new User();
-        $player->setName($request->getName());
-        $player->setSurname($request->getSurname());
+        $playerName = new FullNameValue(
+            $request->getName(),
+            $request->getSurname()
+        );
+        $player->setFullName($playerName);
         $player->setEmail($request->getEmail());
         $playerRepository->save($player, true);
         $team = $teamRepository->find($request->getTeamId());

@@ -12,11 +12,7 @@ class PlayerDTO
     public function __construct(Player $player)
     {
         $this->setId($player->getId());
-        $this->setFullName(sprintf(
-            '%s %s',
-            $player->getName(),
-            $player->getSurname(),
-        ));
+        $this->setFullName($player->getFullName());
     }
 
     public function getId(): int

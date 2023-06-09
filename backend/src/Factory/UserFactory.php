@@ -3,14 +3,17 @@
 namespace App\Factory;
 
 use App\Support\Factory\AbstractFactory;
+use App\ValueObject\User\FullNameValue;
 
 class UserFactory extends AbstractFactory
 {
     protected function initiate(array $fields): array
     {
         return [
-            'name' => $this->faker->name(),
-            'surname' => $this->faker->lastName(),
+            'fullName' => new FullNameValue(
+                $this->faker->name(),
+                $this->faker->lastName(),
+            ),
             'email' => $this->faker->email(),
             'password' => join('', [
                 '$2y$13$jRxcnHaSNaHpTwGgJZazoeU',

@@ -2,16 +2,20 @@
 
 namespace App\Entity;
 
+use App\Constants\RoleConstant;
 use App\Repository\UserRepository;
+use App\ValueObject\User\FullNameValue;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -41,6 +45,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(mappedBy: 'player', targetEntity: TeamPlayerContract::class, orphanRemoval: true)]
     private Collection $teamPlayerContracts;
+
+    #[ORM\Column(type: 'boolean')]
+    private bool $isVerified = false;
+
+    private ?FullNameValue $fullNameValue;
 
     public function __construct()
     {
@@ -81,7 +90,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles[] = RoleConstant::ROLE_USER;
 
         return array_unique($roles);
     }
@@ -117,31 +126,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getCurrentPlayingTeam(): false|Team
+    public function getCurrentPlayingTeam(): null|Team
     {
-        return $this->teamPlayerContracts->last();
+        return $this->teamPlayerContracts->last() ?: null;
     }
 
-    public function getName(): ?string
+    public function getFullName(): FullNameValue
     {
-        return $this->name;
+        return $this->fullNameValue;
     }
 
-    public function setName(null|string $name): self
+    public function setFullName(FullNameValue $value): self
     {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getSurname(): ?string
-    {
-        return $this->surname;
-    }
-
-    public function setSurname(null|string $surname): self
-    {
-        $this->surname = $surname;
+        $this->fullNameValue = $value;
+        $this->name = $value->getName();
+        $this->surname = $value->getSurname();
 
         return $this;
     }
@@ -178,6 +177,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __toString(): string
     {
-        return $this->getName() . ' ' . $this->getSurname();
+        return $this->getFullName();
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(?bool $isVerified): self
+    {
+        $this->isVerified = (bool) $isVerified;
+
+        return $this;
     }
 }

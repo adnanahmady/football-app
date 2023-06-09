@@ -10,4 +10,19 @@ trait AssertionsTrait
             $this->assertArrayHasKey($key, $base);
         }
     }
+
+    protected function assertIsNan($value, string $message = ''): void
+    {
+        $this->assertIsNumeric($value, $message);
+        $this->assertIsNotInt($value, $message);
+        $this->assertIsFloat($value, $message);
+    }
+
+    protected function assertIsInfinite($value, string $message = ''): void
+    {
+        $this->assertGreaterThan(PHP_INT_MAX, $value, $message);
+        $this->assertIsNumeric($value, $message);
+        $this->assertIsNotInt($value, $message);
+        $this->assertIsFloat($value, $message);
+    }
 }
